@@ -1,1 +1,192 @@
+# Causal Inference of Host–Microbiota Interactions in Colorectal Cancer
+
+## Project Overview
+
+This project implements a **multi-omics causal inference pipeline** to investigate how **gut microbiome dysbiosis influences colorectal cancer (CRC)**, integrating:
+
+* Metagenomic microbial abundance profiles
+* Host transcriptomic data (TCGA-COAD)
+* Clinical covariates (age, sex, tumor stage)
+
+Unlike correlation-based microbiome studies, this project explicitly models **causal relationships** using **Directed Acyclic Graphs (DAGs)** and the **DoWhy causal inference framework**.
+
+---
+
+## Motivation
+
+Colorectal cancer has been consistently associated with alterations in gut microbial composition. However, most studies rely on **associational analyses**, making it difficult to distinguish:
+
+* **Causal microbial drivers**
+* **Protective taxa**
+* **Confounding host effects (age, sex)**
+
+This project addresses this limitation by combining **biological priors**, **synthetic yet literature-grounded microbiome data**, and **formal causal inference methods**.
+
+---
+
+## Data Sources
+
+### 1. Metagenomics (Microbiome)
+
+* CRC cohorts reported in large-scale meta-analyses
+* Key references:
+
+  * Thomas et al., *Nature Medicine*, 2019
+  * Wirbel et al., *Nature Medicine*, 2019
+  * Zeller et al., *Mol. Systems Biology*, 2014
+
+**Important**
+Microbiome data in this repository are **synthetically generated**, with effect sizes and distributions calibrated from published CRC studies.
+This enables **controlled causal modeling and reproducibility**, not clinical prediction.
+
+---
+
+### 2. Host Transcriptomics
+
+* **TCGA-COAD** RNA-seq (Illumina HiSeq)
+* Top 1,000 most variable genes selected
+* Differential expression used to identify CRC-associated genes
+
+---
+
+### 3. Clinical Variables
+
+* Age
+* Sex
+* Tumor stage (CRC only)
+
+---
+
+## Project Structure
+
+```
+data/
+├── project/
+│   ├── metagenomics/
+│   │   ├── raw/
+│   │   └── processed/
+│   ├── transcriptomics/
+│   │   └── tcga/
+│   ├── clinical/
+│   └── integrated/
+
+scripts/
+notebooks/
+figures/
+```
+
+---
+
+## Methodology
+
+### 1. Data Generation & Preprocessing
+
+* Synthetic microbiome profiles generated for:
+
+  * 250 CRC samples
+  * 80 healthy controls
+* Relative abundance normalization (compositional data)
+* Bacterial roles annotated as **oncogenic**, **protective**, or **neutral**
+
+---
+
+### 2. Multi-Omics Integration
+
+* Simulated matching between microbiome and TCGA transcriptomics
+* Unified sample IDs
+* Integrated datasets:
+
+  * Microbiome abundance matrix
+  * Gene expression matrix
+  * Clinical metadata
+
+Quality control included:
+
+* Age distribution checks
+* Gene expression distributions
+* Shannon diversity indices
+
+---
+
+### 3. Causal Inference Framework
+
+Causal assumptions encoded using **biologically informed DAGs**:
+
+**Confounders → Microbiome → Host Genes → CRC**
+
+Implemented using:
+
+* `DoWhy`
+* Backdoor adjustment
+* Linear regression estimators
+
+---
+
+### 4. Robustness & Refutation Tests
+
+Each causal estimate was validated using:
+
+* Random common cause refuter
+* Placebo treatment test
+* Data subset validation
+
+This ensures estimates are **stable and not spurious**.
+
+---
+
+## Key Results
+
+* **Fusobacterium nucleatum** shows a **robust positive causal effect** on CRC
+* Protective bacteria (e.g. *Faecalibacterium prausnitzii*) show negative effects
+* Results remain stable across multiple refutation tests
+* Causal network visualization highlights microbiome–CRC pathways
+
+📊 Outputs include:
+
+* Differential abundance plots
+* Causal effect bar charts
+* Integrated pathway networks
+
+---
+
+## Limitations
+
+* Microbiome data is **synthetic**, not patient-derived
+* Causal conclusions depend on DAG assumptions
+* No longitudinal or metabolomics data included
+
+---
+
+## Future Work
+
+* Validation on real metagenomic cohorts
+* Inclusion of metabolomic mediators (SCFAs)
+* Longitudinal causal modeling
+* Non-linear causal estimators
+
+---
+
+## Technologies Used
+
+* Python, Pandas, NumPy
+* TCGA Xena
+* DoWhy (causal inference)
+* NetworkX, Matplotlib, Seaborn
+
+---
+
+## Scientific References
+
+* Thomas AM et al., *Nature Medicine*, 2019
+* Wirbel J et al., *Nature Medicine*, 2019
+* Zeller G et al., *Molecular Systems Biology*, 2014
+
+---
+
+## Author
+
+**Sumaiya Hassan**
+Health AI | Computational Biology 
+
+---
 
